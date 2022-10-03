@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latihan_uts_pbol_2020130002.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="377.0" prefWidth="418.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="latihan_uts_pbol_2020130002.FXMLDocumentController">
     <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <AnchorPane id="AnchorPane" layoutX="45.0" layoutY="4.0" prefHeight="373.0" prefWidth="439.0">
+         <children>
+            <Label fx:id="label1" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+            <MenuBar layoutX="-45.0" layoutY="-5.0" prefHeight="38.0" prefWidth="484.0">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Master">
+                     <items>
+                        <MenuItem fx:id="masterbarang" mnemonicParsing="false" onAction="#masterbarangclick" text="Barang" />
+                        <MenuItem fx:id="masterjual" mnemonicParsing="false" onAction="#masterjualclick" text="Jual" />
+                        <MenuItem fx:id="masterpelanggan" mnemonicParsing="false" onAction="#masterpelangganclick" text="Pelanggan" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Transaksi">
+                     <items>
+                        <MenuItem fx:id="transaksijual" mnemonicParsing="false" onAction="#transaksijualclick" text="Subjual" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Display">
+                     <items>
+                        <MenuItem fx:id="displaybarang" mnemonicParsing="false" onAction="#displaybarangclick" text="Barang" />
+                        <MenuItem fx:id="displayjual" mnemonicParsing="false" onAction="#displayjualclick" text="Jual" />
+                        <MenuItem fx:id="displaypelanggan" mnemonicParsing="false" onAction="#displaypelangganclick" text="Pelanggan" />
+                        <MenuItem fx:id="displaysubjual" mnemonicParsing="false" onAction="#displaysubjualclick" text="Subjual" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Keluar">
+                     <items>
+                        <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitclick" text="Keluar" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>
