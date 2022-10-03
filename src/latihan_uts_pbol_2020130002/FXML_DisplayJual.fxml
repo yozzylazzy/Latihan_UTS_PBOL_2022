@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="561.0" prefWidth="744.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="latihan_uts_pbol_2020130002.FXML_DisplayJualController">
+<AnchorPane id="AnchorPane" prefHeight="561.0" prefWidth="744.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latihan_uts_pbol_2020130002.FXML_DisplayJualController">
    <children>
       <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" prefHeight="576.0" prefWidth="899.0">
          <children>
@@ -33,8 +32,9 @@
                            </font>
                         </Label>
                         <Button fx:id="btnhapussiswa" cancelButton="true" layoutX="178.0" layoutY="499.0" mnemonicParsing="false" onAction="#btnhapusklik" text="HAPUS" />
-                        <Button fx:id="btneditsiswa" defaultButton="true" layoutX="115.0" layoutY="499.0" mnemonicParsing="false" onAction="#btneditklik" text="EDIT" textFill="WHITE" />
+                        <Button fx:id="btneditsiswa" defaultButton="true" layoutX="114.0" layoutY="499.0" mnemonicParsing="false" onAction="#btneditklik" text="EDIT" textFill="WHITE" />
                         <Button fx:id="btntambahsiswa" defaultButton="true" layoutX="14.0" layoutY="499.0" mnemonicParsing="false" onAction="#btntambahklik" text="TAMBAH" textFill="WHITE" />
+                        <TextField fx:id="txtjumlah" editable="false" layoutX="327.0" layoutY="499.0" />
                      </children>
                   </AnchorPane>
                </children>

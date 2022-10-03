@@ -50,6 +50,7 @@ public class FXMLDocumentController implements Initializable {
     public static DBPelanggan dtpelanggan = new DBPelanggan();
     public static DBBarang dtbarang = new DBBarang();
     public static DBSubjual dtsubjual = new DBSubjual();
+    public static DBJual dtjual = new DBJual();
     
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -97,6 +98,19 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void displayjualclick(ActionEvent event) {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_DisplayJual.fxml"));
+            Parent root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
