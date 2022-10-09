@@ -14,7 +14,7 @@ import javafx.collections.ObservableList;
  * @author Yosef Adrian
  */
 public class DBBarang {
-    
+
     private BarangModel data = new BarangModel();
 
     public BarangModel getBarangModel() {
@@ -31,8 +31,8 @@ public class DBBarang {
             Koneksi con = new Koneksi();
             con.bukaKoneksi();
             con.statement = con.dbKoneksi.createStatement();
-            ResultSet rs = 
-                    con.statement.executeQuery("Select * from barang");
+            ResultSet rs
+                    = con.statement.executeQuery("Select * from barang");
             int i = 1;
             while (rs.next()) {
                 BarangModel d = new BarangModel();
@@ -49,14 +49,14 @@ public class DBBarang {
             return null;
         }
     }
-    
-     /*public int validasi(String a, String b) {
+
+    public int validasi(String a) {
         int val = 0;
         try {
             Koneksi con = new Koneksi();
             con.bukaKoneksi();
             con.statement = con.dbKoneksi.createStatement();
-            ResultSet rs = con.statement.executeQuery("Select Count(*) as jml from nilai where NPM = '" + a + "' AND KodeMK = '" + b + "'");
+            ResultSet rs = con.statement.executeQuery("Select Count(*) as jml from barang where KodeBrg = '" + a + "'");
             while (rs.next()) {
                 val = rs.getInt("jml");
             }
@@ -67,16 +67,15 @@ public class DBBarang {
         return val;
     }
 
-    public boolean Delete(String a, String b) {
+    public boolean Delete(String a) {
         boolean berhasil = false;
         Koneksi con = new Koneksi();
         try {
             //System.out.println(a);
             con.bukaKoneksi();
             con.preparedStatement = con.dbKoneksi.prepareStatement(
-                    "delete from siswa where NPM = ? AND KodeMK = ?");
+                    "delete from barang where KodeBrg = ?");
             con.preparedStatement.setString(1, a);
-            con.preparedStatement.setString(2, b);
             con.preparedStatement.executeUpdate();
             berhasil = true;
         } catch (Exception e) {
@@ -86,39 +85,36 @@ public class DBBarang {
             return berhasil;
         }
     }
-    
-    public boolean insert(){
-        boolean berhasil = false; Koneksi con = new Koneksi();
-        try{
+
+    public boolean insert() {
+        boolean berhasil = false;
+        Koneksi con = new Koneksi();
+        try {
             con.bukaKoneksi();
-            con.preparedStatement = con.dbKoneksi.prepareStatement("insert into nilai(NPM,KodeMK,Tanggal, Nilai, Hadir) values (?,?,?,?,?)");
-            con.preparedStatement.setString(1, getNilaiModel().getNPM());
-            con.preparedStatement.setString(2, getNilaiModel().getKodeMK());
-            con.preparedStatement.setDate(3, getNilaiModel().getTanggal());
-            con.preparedStatement.setDouble(4, getNilaiModel().getNilai());
-            con.preparedStatement.setInt(5, getNilaiModel().getHadir());
+            con.preparedStatement = con.dbKoneksi.prepareStatement("insert into barang(KodeBrg,NamaBrg,Harga) values (?,?,?)");
+            con.preparedStatement.setString(1, getBarangModel().getKodebrg());
+            con.preparedStatement.setString(2, getBarangModel().getNamabrg());
+            con.preparedStatement.setInt(3, getBarangModel().getHarga());
             con.preparedStatement.executeUpdate();
             berhasil = true;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             berhasil = false;
-        } finally{
+        } finally {
             con.tutupKoneksi();
             return berhasil;
         }
     }
-    
+
     public boolean update() {
         boolean berhasil = false;
         Koneksi con = new Koneksi();
         try {
             con.bukaKoneksi();
-            con.preparedStatement = con.dbKoneksi.prepareStatement("update nilai set Tanggal = ?, Nilai = ?, Hadir = ? where NPM = ? AND kodeMK = ?");
-            con.preparedStatement.setDate(1, getNilaiModel().getTanggal());
-            con.preparedStatement.setDouble(2, getNilaiModel().getNilai());
-            con.preparedStatement.setInt(3, getNilaiModel().getHadir());
-            con.preparedStatement.setString(4, getNilaiModel().getNPM());
-            con.preparedStatement.setString(5, getNilaiModel().getKodeMK());;
+            con.preparedStatement = con.dbKoneksi.prepareStatement("update barang set NamaBrg = ?, Harga = ? where KodeBrg = ?");
+            con.preparedStatement.setString(1, getBarangModel().getNamabrg());
+            con.preparedStatement.setInt(2, getBarangModel().getHarga());
+            con.preparedStatement.setString(3, getBarangModel().getKodebrg());
             con.preparedStatement.executeUpdate();
             berhasil = true;
         } catch (Exception e) {
@@ -128,5 +124,30 @@ public class DBBarang {
             con.tutupKoneksi();
             return berhasil;
         }
-    }*/
+    }
+    
+    
+    public ObservableList<BarangModel> LookUp(String krit, String dt) {
+        try {
+            ObservableList<BarangModel> tableData = FXCollections.observableArrayList();
+            Koneksi con = new Koneksi();
+            con.bukaKoneksi();
+            con.statement = con.dbKoneksi.createStatement();
+            ResultSet rs = con.statement.executeQuery("Select * from barang  where " + krit + " like '%" + dt + "%'");
+            int i = 1;
+            while (rs.next()) {
+                BarangModel d = new BarangModel();
+                d.setKodebrg(rs.getString("KodeBrg"));
+                d.setNamabrg(rs.getString("NamaBrg"));
+                d.setHarga(rs.getInt("Harga"));
+                tableData.add(d);
+                i++;
+            }
+            con.tutupKoneksi();
+            return tableData;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }

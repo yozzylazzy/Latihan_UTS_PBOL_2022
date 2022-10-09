@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="latihan_uts_pbol_2020130002.FXML_PilihPelangganController">
+   <children>
+      <TextField fx:id="txtisi" layoutX="347.0" layoutY="36.0" prefHeight="39.0" prefWidth="265.0" />
+      <Button fx:id="btncari" layoutX="627.0" layoutY="36.0" mnemonicParsing="false" onAction="#cariklik" text="Cari" />
+      <Button fx:id="btnpilih" layoutX="699.0" layoutY="36.0" mnemonicParsing="false" onAction="#pilihklik" text="Pilih" />
+      <Button fx:id="btnbatal" layoutX="769.0" layoutY="36.0" mnemonicParsing="false" onAction="#batalklik" text="Batal" />
+      <Button fx:id="btnexit" layoutX="906.0" layoutY="36.0" mnemonicParsing="false" onAction="#btnexitklik" text="EXIT" />
+      <Button fx:id="btnsesudah" layoutX="873.0" layoutY="527.0" mnemonicParsing="false" onAction="#btnsesudahklik" text="Sesudah" />
+      <Button fx:id="btnsebelum" layoutX="786.0" layoutY="527.0" mnemonicParsing="false" onAction="#btnsebelumklik" text="Sebelum" />
+      <Button fx:id="akhir" layoutX="723.0" layoutY="527.0" mnemonicParsing="false" onAction="#btnakhirklik" text="Akhir" />
+      <Button fx:id="btnawal" layoutX="664.0" layoutY="527.0" mnemonicParsing="false" onAction="#btnawalklik" text="Awal" />
+      <Button fx:id="btnhapussiswa" cancelButton="true" layoutX="180.0" layoutY="527.0" mnemonicParsing="false" onAction="#btnhapusklik" text="HAPUS" />
+      <Button fx:id="btneditsiswa" defaultButton="true" layoutX="117.0" layoutY="527.0" mnemonicParsing="false" onAction="#btneditklik" text="EDIT" textFill="WHITE" />
+      <Button fx:id="btntambahsiswa" defaultButton="true" layoutX="26.0" layoutY="527.0" mnemonicParsing="false" onAction="#btntambahklik" text="TAMBAH" textFill="WHITE" />
+      <TableView fx:id="tbvpelanggan" layoutX="12.0" layoutY="105.0" prefHeight="404.0" prefWidth="978.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="C1" />
+            <TableColumn prefWidth="75.0" text="C2" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

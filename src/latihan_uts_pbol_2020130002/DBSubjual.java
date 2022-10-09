@@ -5,6 +5,7 @@
 package latihan_uts_pbol_2020130002;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -50,4 +51,82 @@ public class DBSubjual {
             return null;
         }
     }
+
+    public int validasi(String a, String b) {
+        int val = 0;
+        try {
+            Koneksi con = new Koneksi();
+            con.bukaKoneksi();
+            con.statement = con.dbKoneksi.createStatement();
+            ResultSet rs = con.statement.executeQuery("Select Count(*) as jml from subjual where NoFaktur = '" + a + "' and KodeBrg = '" + b + "'");
+            while (rs.next()) {
+                val = rs.getInt("jml");
+            }
+            con.tutupKoneksi();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return val;
+    }
+
+    public boolean Delete(String a, String b) {
+        boolean berhasil = false;
+        Koneksi con = new Koneksi();
+        try {
+            //System.out.println(a);
+            con.bukaKoneksi();
+            con.preparedStatement = con.dbKoneksi.prepareStatement(
+                    "delete from subjual where NoFaktur = ? and KodeBrg = ?");
+            con.preparedStatement.setString(1, a);
+            con.preparedStatement.setString(2, b);
+            con.preparedStatement.executeUpdate();
+            berhasil = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            con.tutupKoneksi();
+            return berhasil;
+        }
+    }
+
+    public boolean insert() {
+        boolean berhasil = false;
+        Koneksi con = new Koneksi();
+        try {
+            con.bukaKoneksi();
+            con.preparedStatement = con.dbKoneksi.prepareStatement("insert into subjual(NoFaktur,KodeBrg,Jumlah) values (?,?,?)");
+            con.preparedStatement.setString(1, getSubJualModel().getNofaktur());
+            con.preparedStatement.setString(2, getSubJualModel().getKodebrg());
+            con.preparedStatement.setInt(3, getSubJualModel().getJumlah());
+            con.preparedStatement.executeUpdate();
+            berhasil = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            berhasil = false;
+        } finally {
+            con.tutupKoneksi();
+            return berhasil;
+        }
+    }
+
+    public boolean update() {
+        boolean berhasil = false;
+        Koneksi con = new Koneksi();
+        try {
+            con.bukaKoneksi();
+            con.preparedStatement = con.dbKoneksi.prepareStatement("update subjual set Jumlah = ? where NoFaktur = ? and KodeBrg = ?");
+            con.preparedStatement.setInt(1, getSubJualModel().getJumlah());
+            con.preparedStatement.setString(2, getSubJualModel().getNofaktur());
+            con.preparedStatement.setString(3, getSubJualModel().getKodebrg());
+            con.preparedStatement.executeUpdate();
+            berhasil = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            berhasil = false;
+        } finally {
+            con.tutupKoneksi();
+            return berhasil;
+        }
+    }
+
 }

@@ -4,12 +4,16 @@
  */
 package latihan_uts_pbol_2020130002;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -17,6 +21,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -85,7 +91,7 @@ public class FXML_DisplayJualController implements Initializable {
     public void getTotalJumlah() {
         ObservableList<JualModel> data = FXMLDocumentController.dtjual.Load();
         int x = 0;
-        for(int i =0; i<data.size(); i++){
+        for (int i = 0; i < data.size(); i++) {
             x++;
         }
         txtjumlah.setText("Jumlah : " + x);
@@ -117,18 +123,70 @@ public class FXML_DisplayJualController implements Initializable {
     @FXML
     private void btnsesudahklik(ActionEvent event) {
         tbvjual.getSelectionModel().selectBelowCell();
-    }
-
-    @FXML
-    private void btnhapusklik(ActionEvent event) {
-    }
-
-    @FXML
-    private void btneditklik(ActionEvent event) {
+        tbvjual.requestFocus();
     }
 
     @FXML
     private void btntambahklik(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_InputJual.fxml"));
+            Parent root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.showAndWait();
+            showData();
+            btnawalklik(event);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        showData();
+        btnawalklik(event);
+    }
+
+    @FXML
+    private void btneditklik(ActionEvent event) {
+        JualModel s = new JualModel();
+        s = tbvjual.getSelectionModel().getSelectedItem();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_InputJual.fxml"));
+            Parent root = (Parent) loader.load();
+            FXML_InputJualController isidt = loader.getController();
+            isidt.execute(s);
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        showData();
+        btnawalklik(event);
+    }
+
+    @FXML
+    private void btnhapusklik(ActionEvent event) {
+        JualModel s = new JualModel();
+        s = tbvjual.getSelectionModel().getSelectedItem();
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Ingin Dihapus?", ButtonType.YES, ButtonType.NO);
+        a.showAndWait();
+        if (a.getResult() == ButtonType.YES) {
+            // System.out.print(s);
+            if (FXMLDocumentController.dtjual.Delete(s.getNofaktur())) {
+                Alert b = new Alert(Alert.AlertType.INFORMATION, "Data berhasil dihapus", ButtonType.OK);
+                b.showAndWait();
+            } else {
+                Alert b = new Alert(Alert.AlertType.ERROR, "Data gagal dihapus", ButtonType.OK);
+                b.showAndWait();
+            }
+            showData();
+        }
     }
 
 }
