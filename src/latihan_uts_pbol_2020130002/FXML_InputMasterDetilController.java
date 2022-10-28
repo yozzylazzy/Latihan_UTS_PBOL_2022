@@ -39,8 +39,6 @@ import javafx.stage.Stage;
 public class FXML_InputMasterDetilController implements Initializable {
 
     @FXML
-    private Button btnlookupkodepelanggan;
-    @FXML
     private DatePicker datetanggal;
     @FXML
     private Button btnexit;
@@ -66,7 +64,7 @@ public class FXML_InputMasterDetilController implements Initializable {
     private TableView<SubJualModel> tbvdetil;
 
     private boolean editmode = false;
-    private DBJual data = new DBJual();
+    private DBJual data = new DBJual(); //Masukan ke FXML_DocumentController agar dapat dibuat static dan dipakai dimana2
 
     /**
      * Initializes the controller class.
@@ -75,8 +73,12 @@ public class FXML_InputMasterDetilController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         data.getSubJualModel().clear();
+
+        //Untuk mengambil tanggal hari ini otomatis
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         datetanggal.setValue(LocalDate.parse(formatter.format(LocalDate.now()), formatter));
+
+        //Melaod data sesuai database
         tbvdetil.getColumns().clear();
         tbvdetil.getItems().clear();
         TableColumn col = new TableColumn("nofaktur");
@@ -90,7 +92,6 @@ public class FXML_InputMasterDetilController implements Initializable {
         tbvdetil.getColumns().addAll(col);
     }
 
-    @FXML
     private void btnlookupkodepelangganclick(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_PilihBarang.fxml"));
@@ -113,12 +114,12 @@ public class FXML_InputMasterDetilController implements Initializable {
 
     @FXML
     private void btnexitklik(ActionEvent event) {
-        System.exit(0);
+        btnexit.getScene().getWindow().hide();
     }
 
     @FXML
     private void btnresetklik(ActionEvent event) {
-        btnhapusklik(event);
+        btnclearklik(event);
         txtnofaktur.setText("");
         txtkodelgn.setText("");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -132,17 +133,18 @@ public class FXML_InputMasterDetilController implements Initializable {
 
     @FXML
     private void btnsimpanklik(ActionEvent event) {
+        data.getJualModel().setNofaktur(txtnofaktur.getText());
         data.getJualModel().setTanggal(Date.valueOf(datetanggal.getValue().
                 format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
         data.getJualModel().setKodelgn(txtkodelgn.getText());
         if (data.saveall()) {
             Alert a = new Alert(Alert.AlertType.INFORMATION, "Data berhasil disimpan ", ButtonType.OK);
             a.showAndWait();
+            btnresetklik(event);
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR, "Data gagal disimpan ", ButtonType.OK);
             a.showAndWait();
         }
-        btnresetklik(event);
     }
 
     @FXML
@@ -184,9 +186,9 @@ public class FXML_InputMasterDetilController implements Initializable {
             }
             if (p >= 0) {
                 tbvdetil.getItems().set(p, tmp);
-                data.getSubJualModel().remove(txtkodebrg.getText());
-                data.setSubJualModel(tmp);
             }
+            data.getSubJualModel().remove(txtkodebrg.getText());
+            data.setSubJualModel(tmp);
         }
         btnclearklik(event);
     }
@@ -197,7 +199,7 @@ public class FXML_InputMasterDetilController implements Initializable {
         if (tmp != null) {
             tbvdetil.getItems().remove(tmp);
             data.getSubJualModel().remove(tmp.getKodebrg());
-            btnhapusklik(event);
+            btnclearklik(event);
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR, "Pilih data dulu", ButtonType.OK);
             a.showAndWait();
