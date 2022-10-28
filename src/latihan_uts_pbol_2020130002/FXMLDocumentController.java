@@ -51,7 +51,9 @@ public class FXMLDocumentController implements Initializable {
     public static DBBarang dtbarang = new DBBarang();
     public static DBSubjual dtsubjual = new DBSubjual();
     public static DBJual dtjual = new DBJual();
-    
+    @FXML
+    private MenuItem transaksidetiljual;
+
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
         label.setText("Hello World!");
@@ -64,7 +66,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void masterbarangclick(ActionEvent event) {
-         try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_InputBarang.fxml"));
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -82,7 +84,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void masterjualclick(ActionEvent event) {
-         try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_InputJual.fxml"));
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -99,7 +101,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void masterpelangganclick(ActionEvent event) {
-         try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_InputPelanggan.fxml"));
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -116,7 +118,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void transaksijualclick(ActionEvent event) {
-         try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_InputSubJual.fxml"));
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -150,7 +152,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void displayjualclick(ActionEvent event) {
-          try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_DisplayJual.fxml"));
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -167,7 +169,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void displaypelangganclick(ActionEvent event) {
-         try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_DisplayPelanggan.fxml"));
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -184,7 +186,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void displaysubjualclick(ActionEvent event) {
-         try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_DisplaySubJual.fxml"));
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
@@ -202,6 +204,23 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void exitclick(ActionEvent event) {
         System.exit(0);
+    }
+
+    @FXML
+    private void transaksidetiljualclick(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_InputMasterDetil.fxml"));
+            Parent root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

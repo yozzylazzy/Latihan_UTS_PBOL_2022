@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="377.0" prefWidth="418.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="latihan_uts_pbol_2020130002.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="377.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latihan_uts_pbol_2020130002.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <AnchorPane id="AnchorPane" layoutX="45.0" layoutY="4.0" prefHeight="373.0" prefWidth="439.0">
@@ -26,6 +26,7 @@
                   <Menu mnemonicParsing="false" text="Transaksi">
                      <items>
                         <MenuItem fx:id="transaksijual" mnemonicParsing="false" onAction="#transaksijualclick" text="Subjual" />
+                        <MenuItem fx:id="transaksidetiljual" mnemonicParsing="false" onAction="#transaksidetiljualclick" text="DetilJual" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Display">

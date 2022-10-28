@@ -12,6 +12,17 @@ public class SubJualModel {
     String nofaktur, kodebrg;
     int jumlah, harga;
 
+    public SubJualModel(String nofaktur, String kodebrg, int jumlah, int harga) {
+        this.nofaktur = nofaktur;
+        this.kodebrg = kodebrg;
+        this.jumlah = jumlah;
+        this.harga = harga;
+    }
+
+    public SubJualModel(){
+        
+    }
+    
     public String getNofaktur() {
         return nofaktur;
     }
