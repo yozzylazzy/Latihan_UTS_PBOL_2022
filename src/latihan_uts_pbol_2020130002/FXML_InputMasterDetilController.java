@@ -92,26 +92,6 @@ public class FXML_InputMasterDetilController implements Initializable {
         tbvdetil.getColumns().addAll(col);
     }
 
-    private void btnlookupkodepelangganclick(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_PilihBarang.fxml"));
-            Parent root = (Parent) loader.load();
-            FXML_PilihBarangController isidt = (FXML_PilihBarangController) loader.getController();
-            Scene scene = new Scene(root);
-            Stage stg = new Stage();
-            stg.initModality(Modality.APPLICATION_MODAL);
-            stg.setResizable(false);
-            stg.setIconified(false);
-            stg.setScene(scene);
-            stg.showAndWait();
-            if (isidt.getHasil() == 1) {
-                txtkodebrg.setText(isidt.getKodeHasil());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     private void btnexitklik(ActionEvent event) {
         btnexit.getScene().getWindow().hide();
