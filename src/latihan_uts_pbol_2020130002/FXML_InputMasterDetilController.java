@@ -23,6 +23,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -65,6 +66,24 @@ public class FXML_InputMasterDetilController implements Initializable {
 
     private boolean editmode = false;
     private DBJual data = new DBJual(); //Masukan ke FXML_DocumentController agar dapat dibuat static dan dipakai dimana2
+    @FXML
+    private Button btnloadbarang;
+    @FXML
+    private Button btnloadpelanggan;
+
+    String namalgn, alamat;
+    int harga, total = 0;
+    String namabrg;
+    @FXML
+    private TextField txtnamapelanggan;
+    @FXML
+    private TextArea txtalamatlgn;
+    @FXML
+    private TextField txtnamabrg;
+    @FXML
+    private TextField txthargabrg;
+    @FXML
+    private TextField txttotalbayar;
 
     /**
      * Initializes the controller class.
@@ -81,15 +100,30 @@ public class FXML_InputMasterDetilController implements Initializable {
         //Melaod data sesuai database
         tbvdetil.getColumns().clear();
         tbvdetil.getItems().clear();
-        TableColumn col = new TableColumn("nofaktur");
+        TableColumn col = new TableColumn("Nofaktur");
         col.setCellValueFactory(new PropertyValueFactory<SubJualModel, String>("Nofaktur"));
         tbvdetil.getColumns().addAll(col);
-        col = new TableColumn("kode barang");
+        col = new TableColumn("Kode Barang");
         col.setCellValueFactory(new PropertyValueFactory<SubJualModel, String>("Kodebrg"));
         tbvdetil.getColumns().addAll(col);
-        col = new TableColumn("jumlah");
+        col = new TableColumn("Jumlah");
         col.setCellValueFactory(new PropertyValueFactory<SubJualModel, Integer>("Jumlah"));
         tbvdetil.getColumns().addAll(col);
+        col = new TableColumn("Nama Barang");
+        col.setCellValueFactory(new PropertyValueFactory<SubJualModel, String>("Namabrg"));
+        tbvdetil.getColumns().addAll(col);
+        col = new TableColumn("Harga Barang");
+        col.setCellValueFactory(new PropertyValueFactory<SubJualModel, String>("Harga"));
+        tbvdetil.getColumns().addAll(col);
+        col = new TableColumn("Bayar");
+        col.setCellValueFactory(new PropertyValueFactory<SubJualModel, String>("Total"));
+        tbvdetil.getColumns().addAll(col);
+
+        for (int i = 0; i < tbvdetil.getItems().size(); i++) {
+            SubJualModel n = tbvdetil.getItems().get(i);
+            total += n.getBayar();
+        }
+        txttotalbayar.setText(String.valueOf(total));
     }
 
     @FXML
@@ -102,6 +136,8 @@ public class FXML_InputMasterDetilController implements Initializable {
         btnclearklik(event);
         txtnofaktur.setText("");
         txtkodelgn.setText("");
+        txtalamatlgn.setText("");
+        txtnamapelanggan.setText("");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         datetanggal.setValue(LocalDate.parse(formatter.format(LocalDate.now()), formatter));
         tbvdetil.getItems().clear();
@@ -114,6 +150,8 @@ public class FXML_InputMasterDetilController implements Initializable {
     @FXML
     private void btnsimpanklik(ActionEvent event) {
         data.getJualModel().setNofaktur(txtnofaktur.getText());
+        data.getJualModel().setAlamat(txtalamatlgn.getText());
+        data.getJualModel().setNamalgn(txtnamapelanggan.getText());
         data.getJualModel().setTanggal(Date.valueOf(datetanggal.getValue().
                 format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
         data.getJualModel().setKodelgn(txtkodelgn.getText());
@@ -152,6 +190,8 @@ public class FXML_InputMasterDetilController implements Initializable {
         SubJualModel tmp = new SubJualModel();
         tmp.setNofaktur(txtnofaktur.getText());
         tmp.setKodebrg(txtkodebrg.getText());
+        tmp.setNamabrg(namabrg);
+        tmp.setHarga(harga);
         tmp.setJumlah(Integer.parseInt(txtjumlah.getText()));
         if (data.getSubJualModel().get(txtkodebrg.getText()) == null) {
             data.setSubJualModel(tmp);
@@ -199,8 +239,64 @@ public class FXML_InputMasterDetilController implements Initializable {
     @FXML
     private void btnclearklik(ActionEvent event) {
         txtkodebrg.setText("");
+        txthargabrg.setText("");
+        txtnamabrg.setText("");
         txtjumlah.setText("");
         txtkodebrg.requestFocus();
+    }
+
+    @FXML
+    private void btnloadbarangklik(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_PilihBarang.fxml"));
+            Parent root = (Parent) loader.load();
+            FXML_PilihBarangController isidt = (FXML_PilihBarangController) loader.getController();
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.showAndWait();
+            if (isidt.getHasil() == 1) {
+                txtkodebrg.setText(isidt.getKodeBarang());
+                harga = isidt.getHargaBarang();
+                txthargabrg.setText(String.valueOf(harga));
+                namabrg = isidt.getNamaBarang();
+                txtnamabrg.setText(namabrg);
+                //data.getSubJualModel().get(txtkodebrg.getText()).setJumlah(isidt.getJumlah());
+                //data.getSubJualModel().get(txtkodebrg.getText()).set(isidt.get());
+                //data.getSubJualModel().get(txtkodebrg.getText()).setHarga(isidt.getHargaBarang());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void btnloadpelangganklik(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_PilihPelanggan.fxml"));
+            Parent root = (Parent) loader.load();
+            FXML_PilihPelangganController isidt = (FXML_PilihPelangganController) loader.getController();
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.showAndWait();
+            if (isidt.getHasil() == 1) {
+                txtkodelgn.setText(isidt.getKodeHasil());
+                namalgn = isidt.getNamaLgn();
+                txtnamapelanggan.setText(namalgn);
+                alamat = isidt.getAlamatLgn();
+                txtalamatlgn.setText(alamat);
+                //data.getJualModel().set
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

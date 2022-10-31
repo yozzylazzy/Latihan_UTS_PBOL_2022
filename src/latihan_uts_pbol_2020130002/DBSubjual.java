@@ -6,6 +6,7 @@ package latihan_uts_pbol_2020130002;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,6 +17,15 @@ import javafx.collections.ObservableList;
 public class DBSubjual {
 
     private SubJualModel data = new SubJualModel();
+    private HashMap<String, BarangModel> data2 = new HashMap<String, BarangModel>();
+
+    public HashMap<String, BarangModel> getBarangModel() {
+        return (data2);
+    }
+
+    public void setBarangModel(BarangModel d) {
+        data2.put(d.getKodebrg(), d);
+    }
 
     public SubJualModel getSubJualModel() {
         return (data);

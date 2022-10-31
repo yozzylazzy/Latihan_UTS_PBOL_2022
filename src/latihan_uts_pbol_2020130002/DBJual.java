@@ -216,6 +216,8 @@ public class DBJual {
                 tmp.setNofaktur(rs.getString("nofaktur"));
                 tmp.setTanggal(rs.getDate("tanggal"));
                 tmp.setKodelgn(rs.getString("Kodelgn"));
+                tmp.setKodelgn(rs.getString("Namalgn"));
+                tmp.setKodelgn(rs.getString("Alamatlgn"));
             }
             con.tutupKoneksi();
         } catch (SQLException e) {

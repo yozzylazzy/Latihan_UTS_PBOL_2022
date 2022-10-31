@@ -9,20 +9,29 @@ package latihan_uts_pbol_2020130002;
  * @author Yosef Adrian
  */
 public class SubJualModel {
-    String nofaktur, kodebrg;
-    int jumlah, harga;
-
-    public SubJualModel(String nofaktur, String kodebrg, int jumlah, int harga) {
-        this.nofaktur = nofaktur;
-        this.kodebrg = kodebrg;
-        this.jumlah = jumlah;
-        this.harga = harga;
-    }
-
+    String nofaktur, kodebrg, namabrg;
+    int jumlah, harga, bayar;
+    
     public SubJualModel(){
         
     }
     
+    public SubJualModel(String nofaktur, String kodebrg, String namabrg, int jumlah, int harga) {
+        this.nofaktur = nofaktur;
+        this.kodebrg = kodebrg;
+        this.namabrg = namabrg;
+        this.jumlah = jumlah;
+        this.harga = harga;
+    }
+
+    public String getNamabrg() {
+        return namabrg;
+    }
+
+    public void setNamabrg(String namabrg) {
+        this.namabrg = namabrg;
+    }
+
     public String getNofaktur() {
         return nofaktur;
     }
@@ -57,6 +66,14 @@ public class SubJualModel {
     
     public int getTotal(){
         return this.jumlah * this.harga;
+    }
+
+    public int getBayar() {
+        return bayar;
+    }
+
+    public void setBayar(int bayar) {
+        this.bayar = bayar;
     }
     
 }

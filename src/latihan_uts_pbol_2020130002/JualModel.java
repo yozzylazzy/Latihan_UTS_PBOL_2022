@@ -11,7 +11,7 @@ import java.sql.Date;
  * @author Yosef Adrian
  */
 public class JualModel {
-    String nofaktur, kodelgn;
+    String nofaktur, kodelgn, namalgn, alamat;
     Date tanggal;
 
     public JualModel(){
@@ -23,6 +23,23 @@ public class JualModel {
         this.kodelgn = kodelgn;
         this.tanggal = tanggal;
     }
+
+    public String getNamalgn() {
+        return namalgn;
+    }
+
+    public void setNamalgn(String namalgn) {
+        this.namalgn = namalgn;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
+    }
+    
     
     
     public String getNofaktur() {

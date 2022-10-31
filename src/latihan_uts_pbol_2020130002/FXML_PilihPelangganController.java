@@ -55,7 +55,8 @@ public class FXML_PilihPelangganController implements Initializable {
 
     private int hasil = 0;
     private String kodehasil = "";
-
+    private String nama="", alamat="";
+    
     public int getHasil() {
         return (hasil);
     }
@@ -64,6 +65,15 @@ public class FXML_PilihPelangganController implements Initializable {
         return (kodehasil);
     }
 
+    public String getNamaLgn() {
+        return (nama);
+    }
+
+    public String getAlamatLgn() {
+        return (alamat);
+    }
+
+    
     /**
      * Initializes the controller class.
      */
@@ -144,6 +154,8 @@ public class FXML_PilihPelangganController implements Initializable {
         hasil = 1;
         int pilihan = tbvpelanggan.getSelectionModel().getSelectedCells().get(0).getRow();
         kodehasil = tbvpelanggan.getItems().get(pilihan).getKodelgn();
+        nama = tbvpelanggan.getItems().get(pilihan).getNamalgn();
+        alamat = tbvpelanggan.getItems().get(pilihan).getAlamat();
         btnpilih.getScene().getWindow().hide();
     }
 

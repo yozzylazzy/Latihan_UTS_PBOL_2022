@@ -129,7 +129,7 @@ public class FXML_InputSubJualController implements Initializable {
             stg.setScene(scene);
             stg.showAndWait();
             if (isidt.getHasil() == 1) {
-                txtkodebrg.setText(isidt.getKodeHasil());
+                txtkodebrg.setText(isidt.getKodeBarang());
             }
         } catch (IOException e) {
             e.printStackTrace();

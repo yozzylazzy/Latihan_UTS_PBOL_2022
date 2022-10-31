@@ -5,6 +5,7 @@
 package latihan_uts_pbol_2020130002;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,13 +59,23 @@ public class FXML_PilihBarangController implements Initializable {
 
     private int hasil = 0;
     private String kodehasil = "";
+    private int harga;
+    private String nama = "";
 
     public int getHasil() {
         return (hasil);
     }
 
-    public String getKodeHasil() {
+    public String getKodeBarang() {
         return (kodehasil);
+    }
+
+    public Integer getHargaBarang() {
+        return (harga);
+    }
+
+    public String getNamaBarang() {
+        return (nama);
     }
 
     /**
@@ -150,6 +161,8 @@ public class FXML_PilihBarangController implements Initializable {
         hasil = 1;
         int pilihan = tbvbarang.getSelectionModel().getSelectedCells().get(0).getRow();
         kodehasil = tbvbarang.getItems().get(pilihan).getKodebrg();
+        harga = tbvbarang.getItems().get(pilihan).getHarga();
+        nama = tbvbarang.getItems().get(pilihan).getNamabrg();
         btnpilih.getScene().getWindow().hide();
     }
 
