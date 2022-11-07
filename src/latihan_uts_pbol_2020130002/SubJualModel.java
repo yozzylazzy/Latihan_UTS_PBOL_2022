@@ -15,6 +15,15 @@ public class SubJualModel {
     public SubJualModel(){
         
     }
+
+    public SubJualModel(String nofaktur, String kodebrg, String namabrg, int jumlah, int harga, int bayar) {
+        this.nofaktur = nofaktur;
+        this.kodebrg = kodebrg;
+        this.namabrg = namabrg;
+        this.jumlah = jumlah;
+        this.harga = harga;
+        this.bayar = bayar;
+    }
     
     public SubJualModel(String nofaktur, String kodebrg, String namabrg, int jumlah, int harga) {
         this.nofaktur = nofaktur;
@@ -69,6 +78,7 @@ public class SubJualModel {
     }
 
     public int getBayar() {
+        bayar = this.harga * this.jumlah;
         return bayar;
     }
 

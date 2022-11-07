@@ -53,6 +53,8 @@ public class FXMLDocumentController implements Initializable {
     public static DBJual dtjual = new DBJual();
     @FXML
     private MenuItem transaksidetiljual;
+    @FXML
+    private MenuItem displaymasterdetil;
 
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -210,6 +212,23 @@ public class FXMLDocumentController implements Initializable {
     private void transaksidetiljualclick(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_InputMasterDetil.fxml"));
+            Parent root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void displaymasterdetilclick(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_MasterDetilDisplay.fxml"));
             Parent root = (Parent) loader.load();
             Scene scene = new Scene(root);
             Stage stg = new Stage();

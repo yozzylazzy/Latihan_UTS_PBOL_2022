@@ -65,14 +65,14 @@ public class FXML_InputMasterDetilController implements Initializable {
     private TableView<SubJualModel> tbvdetil;
 
     private boolean editmode = false;
-    private DBJual data = new DBJual(); //Masukan ke FXML_DocumentController agar dapat dibuat static dan dipakai dimana2
+    public static DBJual data = new DBJual(); //Masukan ke FXML_DocumentController agar dapat dibuat static dan dipakai dimana2
     @FXML
     private Button btnloadbarang;
     @FXML
     private Button btnloadpelanggan;
 
     String namalgn, alamat;
-    int harga, total = 0;
+    int harga;
     String namabrg;
     @FXML
     private TextField txtnamapelanggan;
@@ -96,7 +96,10 @@ public class FXML_InputMasterDetilController implements Initializable {
         //Untuk mengambil tanggal hari ini otomatis
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         datetanggal.setValue(LocalDate.parse(formatter.format(LocalDate.now()), formatter));
+        showData();
+    }
 
+    public void showData() {
         //Melaod data sesuai database
         tbvdetil.getColumns().clear();
         tbvdetil.getItems().clear();
@@ -113,15 +116,23 @@ public class FXML_InputMasterDetilController implements Initializable {
         col.setCellValueFactory(new PropertyValueFactory<SubJualModel, String>("Namabrg"));
         tbvdetil.getColumns().addAll(col);
         col = new TableColumn("Harga Barang");
-        col.setCellValueFactory(new PropertyValueFactory<SubJualModel, String>("Harga"));
+        col.setCellValueFactory(new PropertyValueFactory<SubJualModel, Integer>("Harga"));
         tbvdetil.getColumns().addAll(col);
         col = new TableColumn("Bayar");
-        col.setCellValueFactory(new PropertyValueFactory<SubJualModel, String>("Total"));
+        col.setCellValueFactory(new PropertyValueFactory<SubJualModel, Integer>("Total"));
         tbvdetil.getColumns().addAll(col);
 
+    }
+
+    private void hitungTotal() {
+        int total = 0;
         for (int i = 0; i < tbvdetil.getItems().size(); i++) {
             SubJualModel n = tbvdetil.getItems().get(i);
-            total += n.getBayar();
+
+            System.out.println(i);
+            System.out.println(n);
+            System.out.println(n.getTotal());
+            total += n.getTotal();
         }
         txttotalbayar.setText(String.valueOf(total));
     }
@@ -174,9 +185,12 @@ public class FXML_InputMasterDetilController implements Initializable {
                 if (tmp.getTanggal() != null) {
                     datetanggal.setValue(tmp.getTanggal().toLocalDate());
                     txtkodelgn.setText(tmp.getKodelgn());
+                    txtnamapelanggan.setText(tmp.getNamalgn());
+                    txtalamatlgn.setText(tmp.getAlamat());
                     ObservableList<SubJualModel> dt = data.LoadDetil();
                     if (dt != null) {
                         tbvdetil.setItems(dt);
+                        hitungTotal();
                     }
                 }
                 txtnofaktur.setEditable(false);
@@ -190,8 +204,8 @@ public class FXML_InputMasterDetilController implements Initializable {
         SubJualModel tmp = new SubJualModel();
         tmp.setNofaktur(txtnofaktur.getText());
         tmp.setKodebrg(txtkodebrg.getText());
-        tmp.setNamabrg(namabrg);
-        tmp.setHarga(harga);
+        tmp.setNamabrg(txtnamabrg.getText());
+        tmp.setHarga(Integer.parseInt(txthargabrg.getText()));
         tmp.setJumlah(Integer.parseInt(txtjumlah.getText()));
         if (data.getSubJualModel().get(txtkodebrg.getText()) == null) {
             data.setSubJualModel(tmp);
@@ -206,10 +220,12 @@ public class FXML_InputMasterDetilController implements Initializable {
             }
             if (p >= 0) {
                 tbvdetil.getItems().set(p, tmp);
+                data.getSubJualModel().remove(txtkodebrg.getText());
+                data.setSubJualModel(tmp);
             }
-            data.getSubJualModel().remove(txtkodebrg.getText());
-            data.setSubJualModel(tmp);
+
         }
+        hitungTotal();
         btnclearklik(event);
     }
 
@@ -232,7 +248,19 @@ public class FXML_InputMasterDetilController implements Initializable {
         SubJualModel tmp = tbvdetil.getSelectionModel().getSelectedItem();
         if (tmp != null) {
             txtkodebrg.setText(tmp.getKodebrg());
+            txtnamabrg.setText(tmp.getNamabrg());
+            txthargabrg.setText(String.valueOf(tmp.getHarga()));
             txtjumlah.setText(String.valueOf(tmp.getJumlah()));
+            int total = 0;
+            for (int i = 0; i < tbvdetil.getItems().size(); i++) {
+                SubJualModel n = tbvdetil.getItems().get(i);
+
+                System.out.println(i);
+                System.out.println(n);
+                System.out.println(n.getTotal());
+                total += n.getTotal();
+            }
+            txttotalbayar.setText(String.valueOf(total));
         }
     }
 
@@ -299,4 +327,29 @@ public class FXML_InputMasterDetilController implements Initializable {
         }
     }
 
+    public void execute(JualModel d) {
+        if (!d.getNofaktur().isEmpty()) {
+            FXML_InputMasterDetilController.data.getJualModel().setNofaktur(d.getNofaktur());
+            if (FXML_InputMasterDetilController.data.validasi(d.getNofaktur()) >= 1) {
+                JualModel tmp = FXML_InputMasterDetilController.data.getdata(d.getNofaktur());
+                editmode = true;
+                FXML_InputMasterDetilController.data.setJualModel(d);
+                txtnofaktur.setText(d.getNofaktur());
+                if (d.getTanggal() != null) {
+                    datetanggal.setValue(d.getTanggal().toLocalDate());
+                }
+                txtkodelgn.setText(d.getKodelgn());
+                txtnamapelanggan.setText(d.getNamalgn());
+                txtalamatlgn.setText(d.getAlamat());
+                ObservableList<SubJualModel> data
+                        = FXML_InputMasterDetilController.data.LoadDetil();
+                if (data != null) {
+                    tbvdetil.setItems(data);
+                    hitungTotal();
+                }
+                txtnofaktur.setEditable(false);
+                txtkodelgn.requestFocus();
+            }
+        }
+    }
 }

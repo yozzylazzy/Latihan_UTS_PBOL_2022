@@ -18,6 +18,7 @@ public class DBJual {
 
     private JualModel data = new JualModel();
     private HashMap<String, SubJualModel> data2 = new HashMap<String, SubJualModel>();
+
     //String pada HashMap di atas mengarah pada KodeBrg dari tabel Jual
     public JualModel getJualModel() {
         return (data);
@@ -43,13 +44,15 @@ public class DBJual {
             data2.clear();
             con.statement = con.dbKoneksi.createStatement();
             ResultSet rs = con.statement.executeQuery(
-                    "Select * from subjual where nofaktur = '" + getJualModel().getNofaktur() + "'");
+                    "Select * from subjual s join barang b on (s.Kodebrg=b.Kodebrg) where nofaktur = '" + getJualModel().getNofaktur() + "'");
             int i = 1;
             while (rs.next()) {
                 SubJualModel d = new SubJualModel();
                 d.setNofaktur(rs.getString("NoFaktur"));
-                d.setKodebrg(rs.getString("Kodebrg"));
-                d.setJumlah(rs.getInt("jumlah"));
+                d.setKodebrg(rs.getString("KodeBrg"));
+                d.setNamabrg(rs.getString("NamaBrg"));
+                d.setJumlah(rs.getInt("Jumlah"));
+                d.setHarga(rs.getInt("Harga"));
                 tableData.add(d);
                 setSubJualModel(d);
                 i++;
@@ -61,31 +64,30 @@ public class DBJual {
             return null;
         }
     }
-
-    public ObservableList<JualModel> Load() {
-        try {
-            ObservableList<JualModel> TableData = FXCollections.observableArrayList();
-            Koneksi con = new Koneksi();
-            con.bukaKoneksi();
-            con.statement = con.dbKoneksi.createStatement();
-            ResultSet rs
-                    = con.statement.executeQuery("Select * from jual");
-            int i = 1;
-            while (rs.next()) {
-                JualModel d = new JualModel();
-                d.setNofaktur(rs.getString("NoFaktur"));
-                d.setKodelgn(rs.getString("KodeLgn"));
-                d.setTanggal(rs.getDate("Tanggal"));
-                TableData.add(d);
-                i++;
-            }
-            con.tutupKoneksi();
-            return TableData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public ObservableList<JualModel> Load() {
+//        try {
+//            ObservableList<JualModel> TableData = FXCollections.observableArrayList();
+//            Koneksi con = new Koneksi();
+//            con.bukaKoneksi();
+//            con.statement = con.dbKoneksi.createStatement();
+//            ResultSet rs
+//                    = con.statement.executeQuery("Select * from jual");
+//            int i = 1;
+//            while (rs.next()) {
+//                JualModel d = new JualModel();
+//                d.setNofaktur(rs.getString("NoFaktur"));
+//                d.setKodelgn(rs.getString("KodeLgn"));
+//                d.setTanggal(rs.getDate("Tanggal"));
+//                TableData.add(d);
+//                i++;
+//            }
+//            con.tutupKoneksi();
+//            return TableData;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
     public int validasi(String nomor) {
         int val = 0;
@@ -210,14 +212,14 @@ public class DBJual {
             con.bukaKoneksi();
             con.statement = con.dbKoneksi.createStatement();
             ResultSet rs = con.statement.executeQuery(
-                    "select * from jual where Nofaktur = '"
+                    "select * from jual j join pelanggan p using (Kodelgn) where Nofaktur = '"
                     + nomor + "'");
             while (rs.next()) {
                 tmp.setNofaktur(rs.getString("nofaktur"));
                 tmp.setTanggal(rs.getDate("tanggal"));
                 tmp.setKodelgn(rs.getString("Kodelgn"));
-                tmp.setKodelgn(rs.getString("Namalgn"));
-                tmp.setKodelgn(rs.getString("Alamatlgn"));
+                tmp.setNamalgn(rs.getString("Namalgn"));
+                tmp.setAlamat(rs.getString("Alamat"));
             }
             con.tutupKoneksi();
         } catch (SQLException e) {
@@ -225,5 +227,54 @@ public class DBJual {
         }
         return tmp;
     }
-    
+
+    public ObservableList<JualModel> Load() {
+        try {
+            ObservableList<JualModel> tableData = FXCollections.observableArrayList();
+            Koneksi con = new Koneksi();
+            con.bukaKoneksi();
+            con.statement = con.dbKoneksi.createStatement();
+            ResultSet rs = con.statement.executeQuery(
+                    "select * from jual j join pelanggan p on (j.kodelgn=p.kodelgn) ");
+            int i = 1;
+            while (rs.next()) {
+                JualModel d = new JualModel();
+                d.setNofaktur(rs.getString("NoFaktur"));
+                d.setTanggal(rs.getDate("tanggal"));
+                d.setKodelgn(rs.getString("Kodelgn"));
+                d.setNamalgn(rs.getString("Namalgn"));
+                d.setAlamat(rs.getString("Alamat"));
+                tableData.add(d);
+                i++;
+            }
+            con.tutupKoneksi();
+            return tableData;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean delete(String nomor) {
+        boolean berhasil = false;
+        Koneksi con = new Koneksi();
+        try {
+            con.bukaKoneksi();;
+            con.dbKoneksi.setAutoCommit(false);
+            con.preparedStatement = con.dbKoneksi.prepareStatement("delete from subjual where Nofaktur = ?");
+            con.preparedStatement.setString(1, nomor);
+            con.preparedStatement.executeUpdate();
+            con.preparedStatement = con.dbKoneksi.prepareStatement("delete from jual where Nofaktur = ?");
+            con.preparedStatement.setString(1, nomor);
+            con.preparedStatement.executeUpdate();
+            con.dbKoneksi.commit();
+            berhasil = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            con.tutupKoneksi();
+            return berhasil;
+        }
+    }
+
 }

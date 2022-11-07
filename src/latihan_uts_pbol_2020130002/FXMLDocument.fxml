@@ -35,6 +35,7 @@
                         <MenuItem fx:id="displayjual" mnemonicParsing="false" onAction="#displayjualclick" text="Jual" />
                         <MenuItem fx:id="displaypelanggan" mnemonicParsing="false" onAction="#displaypelangganclick" text="Pelanggan" />
                         <MenuItem fx:id="displaysubjual" mnemonicParsing="false" onAction="#displaysubjualclick" text="Subjual" />
+                        <MenuItem fx:id="displaymasterdetil" mnemonicParsing="false" onAction="#displaymasterdetilclick" text="MasterDetil" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Keluar">

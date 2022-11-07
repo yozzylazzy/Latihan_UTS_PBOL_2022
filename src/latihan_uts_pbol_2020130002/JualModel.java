@@ -17,6 +17,14 @@ public class JualModel {
     public JualModel(){
         
     }
+
+    public JualModel(String nofaktur, String kodelgn, String namalgn, String alamat, Date tanggal) {
+        this.nofaktur = nofaktur;
+        this.kodelgn = kodelgn;
+        this.namalgn = namalgn;
+        this.alamat = alamat;
+        this.tanggal = tanggal;
+    }
     
     public JualModel(String nofaktur, String kodelgn, Date tanggal) {
         this.nofaktur = nofaktur;
