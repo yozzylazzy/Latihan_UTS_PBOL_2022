@@ -38,6 +38,14 @@
                         <MenuItem fx:id="displaymasterdetil" mnemonicParsing="false" onAction="#displaymasterdetilclick" text="MasterDetil" />
                      </items>
                   </Menu>
+                  <Menu mnemonicParsing="false" text="Laporan">
+                     <items>
+                        <MenuItem fx:id="laporanbarang" mnemonicParsing="false" onAction="#laporanbarangklik" text="Barang" />
+                        <MenuItem fx:id="laporanpelanggan" mnemonicParsing="false" onAction="#laporanpelangganklik" text="Pelanggan" />
+                        <MenuItem fx:id="laporansubjual" mnemonicParsing="false" onAction="#laporansubjualklik" text="SubJual" />
+                        <MenuItem fx:id="laporanjual" mnemonicParsing="false" onAction="#laporanjualklik" text="Jual" />
+                     </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="Keluar">
                      <items>
                         <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exitclick" text="Keluar" />

@@ -6,8 +6,13 @@ package latihan_uts_pbol_2020130002;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -149,4 +154,20 @@ public class DBPelanggan {
             return null;
         }
     }
+
+    public void print() {
+        Koneksi con = new Koneksi();
+        String is = "./src/latihan_uts_pbol_2020130002/LaporanPelanggan.jasper";
+        Map map = new HashMap();
+        map.put("p_periode", "Desember");
+        con.bukaKoneksi();
+        try {
+            JasperPrint jasperPrint = JasperFillManager.fillReport(is, map, con.dbKoneksi);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        con.tutupKoneksi();
+    }
+   
 }

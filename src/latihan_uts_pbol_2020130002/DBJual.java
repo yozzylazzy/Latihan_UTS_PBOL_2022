@@ -7,8 +7,14 @@ package latihan_uts_pbol_2020130002;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -274,6 +280,22 @@ public class DBJual {
         } finally {
             con.tutupKoneksi();
             return berhasil;
+        }
+    }
+    
+    public void cetaklaporanMD(String pilih){
+        Koneksi con = new Koneksi();        
+        String is = "./ src/ nama project/nama tampilan laporan.jrxml";   
+        Map<String,Object> map = new HashMap<String,Object>(); 
+        map.put("Prm_NoFakturMaster",pilih);       
+        con.bukaKoneksi();        
+        try{
+           JasperReport jasperReport = JasperCompileManager.compileReport(is);
+           JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,map,con.dbKoneksi);
+           JasperViewer.viewReport(jasperPrint,false);
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
         }
     }
 

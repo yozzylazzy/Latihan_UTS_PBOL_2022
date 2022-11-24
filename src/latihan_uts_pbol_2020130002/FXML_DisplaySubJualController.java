@@ -183,5 +183,4 @@ public class FXML_DisplaySubJualController implements Initializable {
             showData();
         }
     }
-
 }

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="32d7a49c-442f-416c-8941-415bca0e4597">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="443"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select * from jual j inner join subjual s on j.nofaktur=s.nofaktur
+inner join pelanggan p on p.kodelgn=j.kodelgn
+inner join barang b on b.kodebrg=s.kodebrg]]>
+	</queryString>
+	<field name="NoFaktur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tanggal" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KodeLgn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="KodeBrg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Jumlah" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NamaLgn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Alamat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NamaBrg" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Harga" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="subtotal" class="java.lang.Integer" resetType="Group" resetGroup="mjual" calculation="Sum">
+		<variableExpression><![CDATA[$F{Jumlah}*$F{Harga}]]></variableExpression>
+	</variable>
+	<variable name="total" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{Harga}*$F{Jumlah}]]></variableExpression>
+	</variable>
+	<group name="mjual">
+		<groupExpression><![CDATA[$F{NoFaktur}]]></groupExpression>
+		<groupHeader>
+			<band height="120">
+				<textField>
+					<reportElement x="0" y="0" width="100" height="20" uuid="6059bfa0-9abd-4547-9e40-a1a6d50a9a0f"/>
+					<textFieldExpression><![CDATA[$F{NoFaktur}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="20" width="100" height="20" uuid="50811a4b-7dc6-42e6-a0af-49c52590c072"/>
+					<textFieldExpression><![CDATA[$F{Tanggal}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="40" width="100" height="20" uuid="240973ae-ceec-45e0-84df-a65f95c59624"/>
+					<textFieldExpression><![CDATA[$F{KodeLgn}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="214" y="40" width="100" height="20" uuid="cffa6f23-0df4-43ec-81f1-c5a9e9f0c7ee"/>
+					<textFieldExpression><![CDATA[$F{NamaLgn}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="404" y="40" width="100" height="20" uuid="48f02200-3b3f-475f-98c4-0786a14f0be0"/>
+					<textFieldExpression><![CDATA[$F{Alamat}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="90" width="100" height="20" uuid="1691d47d-607f-4dd2-9637-0910be7bd5a2"/>
+					<text><![CDATA[KodeBrg]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="114" y="90" width="100" height="20" uuid="574f7546-c117-4171-9540-8ae76edfe5c3"/>
+					<text><![CDATA[NamaBrg]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="233" y="90" width="100" height="20" uuid="f1f9bdb3-cb7c-4b2b-806d-8b5eb7d28850"/>
+					<text><![CDATA[Harga]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="355" y="90" width="100" height="20" uuid="ea0e5e1c-69c7-41c5-87f1-de774b33ce85"/>
+					<text><![CDATA[Jumlah]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="479" y="90" width="100" height="20" uuid="c29f2ad5-5473-4b00-a6b0-7d9fd181111a"/>
+					<text><![CDATA[Bayar]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="84">
+				<staticText>
+					<reportElement x="355" y="13" width="100" height="20" uuid="69b02ce8-6e4e-460a-98ba-71c564040fa0"/>
+					<text><![CDATA[Subtotal]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement x="479" y="13" width="100" height="20" uuid="5281e16d-2b0c-4f66-bc9d-87d980d7d45c"/>
+					<textFieldExpression><![CDATA[$V{subtotal}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="195" y="33" width="160" height="20" uuid="93c12289-633a-4dce-ac3b-098f5b20ed86"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[LAPORAN PENJUALAN]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="68" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="13" width="100" height="20" uuid="48857c56-11b7-4fd4-aaa1-397bac4feba5"/>
+				<textFieldExpression><![CDATA[$F{KodeBrg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="114" y="13" width="100" height="20" uuid="8da4afce-d075-4905-b0e7-32f3a5ce299c"/>
+				<textFieldExpression><![CDATA[$F{NamaBrg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="233" y="13" width="100" height="20" uuid="aef5c25e-cc49-496a-947c-fc131722028c"/>
+				<textFieldExpression><![CDATA[$F{Harga}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="355" y="13" width="100" height="20" uuid="f95df5d9-5f83-455b-8fbc-23b2061333e8"/>
+				<textFieldExpression><![CDATA[$F{Jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="479" y="13" width="100" height="20" uuid="7db29b7b-b57a-4da2-b54c-8ba6152c941c"/>
+				<textFieldExpression><![CDATA[$F{Harga}*$F{Jumlah}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="355" y="10" width="100" height="20" uuid="55fe3654-e54e-436b-9e68-790a40ce11c2"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="479" y="10" width="100" height="20" uuid="1d63e463-3efc-45ce-b918-208b67c94aba"/>
+				<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

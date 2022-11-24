@@ -67,7 +67,7 @@ public class FXML_DisplayJualController implements Initializable {
         if (data != null) {
             tbvjual.getColumns().clear();
             tbvjual.getItems().clear();
-
+            
             TableColumn col = new TableColumn("No Faktur");
             col.setCellValueFactory(new PropertyValueFactory<JualModel, String>("Nofaktur"));
             tbvjual.getColumns().addAll(col);

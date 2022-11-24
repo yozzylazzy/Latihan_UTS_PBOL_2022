@@ -46,15 +46,24 @@ public class FXMLDocumentController implements Initializable {
     private MenuItem displaysubjual;
     @FXML
     private MenuItem exit;
-
+    
     public static DBPelanggan dtpelanggan = new DBPelanggan();
     public static DBBarang dtbarang = new DBBarang();
     public static DBSubjual dtsubjual = new DBSubjual();
     public static DBJual dtjual = new DBJual();
+    
     @FXML
     private MenuItem transaksidetiljual;
     @FXML
     private MenuItem displaymasterdetil;
+    @FXML
+    private MenuItem laporanbarang;
+    @FXML
+    private MenuItem laporanpelanggan;
+    @FXML
+    private MenuItem laporansubjual;
+    @FXML
+    private MenuItem laporanjual;
 
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -81,7 +90,6 @@ public class FXMLDocumentController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -241,4 +249,40 @@ public class FXMLDocumentController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void laporanbarangklik(ActionEvent event) {
+        //dtbarang.print();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_PilihBarang.fxml"));
+            Parent root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            FXML_PilihBarangController isidt = (FXML_PilihBarangController) loader.getController();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.showAndWait();
+            if (isidt.getHasil() == 1) {
+                dtbarang.print(isidt.getNamaBarang());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void laporanpelangganklik(ActionEvent event) {
+        dtpelanggan.print();
+    }
+
+    @FXML
+    private void laporansubjualklik(ActionEvent event) {
+    }
+
+    @FXML
+    private void laporanjualklik(ActionEvent event) {
+    }
+
 }

@@ -4,10 +4,22 @@
  */
 package latihan_uts_pbol_2020130002;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -125,8 +137,7 @@ public class DBBarang {
             return berhasil;
         }
     }
-    
-    
+
     public ObservableList<BarangModel> LookUp(String krit, String dt) {
         try {
             ObservableList<BarangModel> tableData = FXCollections.observableArrayList();
@@ -150,4 +161,36 @@ public class DBBarang {
             return null;
         }
     }
+
+    public void print() {
+        Koneksi con = new Koneksi();
+        String is = "./src/latihan_uts_pbol_2020130002/LaporanLatihan.jasper";
+        Map map = new HashMap();
+        map.put("p_periode", "Desember");
+        con.bukaKoneksi();
+        try {
+            JasperPrint jasperPrint = JasperFillManager.fillReport(is, map, con.dbKoneksi);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        con.tutupKoneksi();
+    }
+
+    public void print(String dt) {
+        Koneksi con = new Koneksi();
+        String is = "./src/latihan_uts_pbol_2020130002/LaporanLatihan.jasper";
+        Map map = new HashMap();
+        map.put("prm", dt);
+        con.bukaKoneksi();
+        try {
+            JasperPrint jasperPrint = JasperFillManager.fillReport(is, map, con.dbKoneksi);
+            JasperViewer.viewReport(jasperPrint, false);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        con.tutupKoneksi();
+    }
+
 }
