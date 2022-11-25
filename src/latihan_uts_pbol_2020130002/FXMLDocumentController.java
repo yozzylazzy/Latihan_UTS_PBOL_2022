@@ -64,6 +64,8 @@ public class FXMLDocumentController implements Initializable {
     private MenuItem laporansubjual;
     @FXML
     private MenuItem laporanjual;
+    @FXML
+    private MenuItem simulasi;
 
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -283,6 +285,23 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void laporanjualklik(ActionEvent event) {
+    }
+
+    @FXML
+    private void simulasiclick(ActionEvent event) {
+          try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML_Simulasi.fxml"));
+            Parent root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+            Stage stg = new Stage();
+            stg.initModality(Modality.APPLICATION_MODAL);
+            stg.setResizable(false);
+            stg.setIconified(false);
+            stg.setScene(scene);
+            stg.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

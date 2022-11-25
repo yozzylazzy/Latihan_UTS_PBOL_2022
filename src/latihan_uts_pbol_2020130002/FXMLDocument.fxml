@@ -11,10 +11,10 @@
 <AnchorPane id="AnchorPane" prefHeight="377.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="latihan_uts_pbol_2020130002.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <AnchorPane id="AnchorPane" layoutX="45.0" layoutY="4.0" prefHeight="373.0" prefWidth="439.0">
+      <AnchorPane id="AnchorPane" layoutX="45.0" layoutY="4.0" prefHeight="373.0" prefWidth="598.0">
          <children>
             <Label fx:id="label1" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-            <MenuBar layoutX="-45.0" layoutY="-5.0" prefHeight="38.0" prefWidth="484.0">
+            <MenuBar layoutX="-45.0" layoutY="-5.0" prefHeight="39.0" prefWidth="643.0">
                <menus>
                   <Menu mnemonicParsing="false" text="Master">
                      <items>
@@ -44,6 +44,11 @@
                         <MenuItem fx:id="laporanpelanggan" mnemonicParsing="false" onAction="#laporanpelangganklik" text="Pelanggan" />
                         <MenuItem fx:id="laporansubjual" mnemonicParsing="false" onAction="#laporansubjualklik" text="SubJual" />
                         <MenuItem fx:id="laporanjual" mnemonicParsing="false" onAction="#laporanjualklik" text="Jual" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Simulasi">
+                     <items>
+                        <MenuItem fx:id="simulasi" mnemonicParsing="false" onAction="#simulasiclick" text="Simulasi" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Keluar">

@@ -282,20 +282,39 @@ public class DBJual {
             return berhasil;
         }
     }
-    
-    public void cetaklaporanMD(String pilih){
-        Koneksi con = new Koneksi();        
-        String is = "./ src/ nama project/nama tampilan laporan.jrxml";   
-        Map<String,Object> map = new HashMap<String,Object>(); 
-        map.put("Prm_NoFakturMaster",pilih);       
-        con.bukaKoneksi();        
-        try{
-           JasperReport jasperReport = JasperCompileManager.compileReport(is);
-           JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,map,con.dbKoneksi);
-           JasperViewer.viewReport(jasperPrint,false);
-        }
-        catch(Exception ex){
+
+    public void cetaklaporanMD(String pilih) {
+        Koneksi con = new Koneksi();
+        String is = "./ src/ nama project/nama tampilan laporan.jrxml";
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("Prm_NoFakturMaster", pilih);
+        con.bukaKoneksi();
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport(is);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, con.dbKoneksi);
+            JasperViewer.viewReport(jasperPrint, false);
+        } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public String autonum(String tahun) {
+        String tmp = "";
+        try {
+            Koneksi con = new Koneksi();
+            con.bukaKoneksi();
+            con.statement = con.dbKoneksi.createStatement();
+            ResultSet rs = con.statement.executeQuery(
+                    "select max(nofaktur) as n from jual where nofaktur like '" + tahun + "%'");
+            while (rs.next()) {
+                tmp = tahun
+                        + String.format("%03d", Integer.parseInt(rs.getString("n").substring(4)) + 1);
+            }
+            con.tutupKoneksi();
+            return tmp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return tmp;
         }
     }
 
