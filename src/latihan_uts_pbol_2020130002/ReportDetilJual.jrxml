@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="373c983d-4ef6-46cf-80b9-f8d944d85d38">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="Prm_NoFakturDetil" class="java.lang.String"/>
+	<parameter name="Prm_NoFakturDetil" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[select * from subjual s join jual j on(s.NoFaktur = j.NoFaktur) 
-WHERE NoFaktur = $P{Prm_NoFakturDetil}]]>
+		<![CDATA[select s.NoFaktur, KodeBrg,Jumlah,Tanggal,KodeLgn from subjual s join jual j on(s.NoFaktur = j.NoFaktur) 
+WHERE s.NoFaktur = $P{Prm_NoFakturDetil}]]>
 	</queryString>
 	<field name="NoFaktur" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -30,13 +32,55 @@ WHERE NoFaktur = $P{Prm_NoFakturDetil}]]>
 		<band height="79" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="36" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="19abaada-c967-40b7-9ade-bfce3178dbb2"/>
+				<text><![CDATA[NoFaktur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="0" width="100" height="20" uuid="4a1682d2-bb44-4263-96bb-f26237b105c0"/>
+				<text><![CDATA[KodeBrg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="0" width="100" height="20" uuid="8d092d2e-9770-443d-98ec-be3f5bf76d9b"/>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="0" width="100" height="20" uuid="e73da30b-dd26-4544-8f28-2d6f46d20e03"/>
+				<text><![CDATA[KodeLgn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="0552120a-9a0c-4010-872b-fcd97ad0d06f"/>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="6e565056-73b3-49e8-b0e2-8e8443b12911"/>
+				<textFieldExpression><![CDATA[$F{NoFaktur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="100" height="20" uuid="c6ca3e4c-cd30-4582-adc0-4a8cd671212d"/>
+				<textFieldExpression><![CDATA[$F{KodeBrg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="a5a4f096-cd50-40ae-a18c-42632116c175"/>
+				<textFieldExpression><![CDATA[$F{Jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="0" width="100" height="20" uuid="ddbe582a-d2fd-4986-a89f-05e953024b5b"/>
+				<textFieldExpression><![CDATA[$F{KodeLgn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="bbc88a47-4ab5-430e-94a8-43a999ba4df3"/>
+				<textFieldExpression><![CDATA[$F{Tanggal}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>

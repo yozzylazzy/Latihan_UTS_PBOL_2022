@@ -29,18 +29,43 @@
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="146" y="41" width="100" height="20" uuid="2926b970-c64b-4364-819d-62b12ec05602"/>
+				<text><![CDATA[NoFaktur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="100" height="20" uuid="e7c3a90a-7fba-4a27-93a3-aef019d7e633"/>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="41" width="100" height="20" uuid="1d642a99-811e-42c9-bf0a-3ddf60f63487"/>
+				<text><![CDATA[KodeLgn]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="128" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="25" width="555" height="100" uuid="c3caecf6-b25b-4f50-aa2f-0d2ae3b4d7e0"/>
+				<reportElement x="0" y="41" width="555" height="85" uuid="c3caecf6-b25b-4f50-aa2f-0d2ae3b4d7e0"/>
 				<subreportParameter name="Prm_NoFakturDetil">
 					<subreportParameterExpression><![CDATA[$F{NoFaktur}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ReportDetilJual.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement x="146" y="10" width="100" height="20" uuid="279583c2-7a1d-4ef9-a9a6-7e4862138952"/>
+				<textFieldExpression><![CDATA[$F{NoFaktur}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="10" width="100" height="20" uuid="12bf49ba-ce9c-475c-9895-8277905f3a2b"/>
+				<textFieldExpression><![CDATA[$F{Tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="288" y="10" width="100" height="20" uuid="4ac4bf7f-6bca-41e7-b78b-4125330c9be4"/>
+				<textFieldExpression><![CDATA[$F{KodeLgn}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
