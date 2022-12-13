@@ -110,7 +110,7 @@ public class FXML_SimulasiController implements Initializable {
             //Untuk menjalankan Perintah setiap detik atau satuan waktu yang diatur
             //Platform.runLater => Untuk mensinkronkan JavaFX dengan Perintah yang dilaksanakan
             
-        }, 0, 10000 * wkt);
+        }, 0, 1000 * wkt);
     }
 
 }
